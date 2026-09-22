@@ -1,16 +1,3 @@
-# DRAFT — not submitted. Target path in a fork of usnistgov/ai-metrology-submissions:
-#   submissions/tool-descriptor-mutation-detection-rate.yml
-# Written against schema validation/schemas/v1.json at ref 7f0609217621aa905973ad0cc03f5e6a8c97e345.
-# Two values are San's to decide before this is usable: submitter_organizations and
-# contact_email. Both are left UNFILLED on purpose so this cannot be skim-approved — the
-# merged YAML is public and permanent.
-#   contact_email: in-repo precedent is a GitHub noreply address. Open PR #16 uses
-#     "5340827+elang2@users.noreply.github.com"
-#     (elang2/didactic-rotary-phone@ef30865656a230b8dd96d0534b36e10ec5fb4c1f).
-#   submitter_organizations: "Independent contributor" puts San's name nowhere in the merged
-#     file. PR #16 uses "Elankumaran Srinivasan (independent researcher, ORCID ...)".
-#     If the merged YAML is meant to be the evidence artifact, the name has to be in it.
-
 schema_version: "1.0"
 
 name: Tool-Descriptor Mutation Detection Rate
@@ -107,18 +94,22 @@ references:
 
 implementation_resources:
   - >-
+    PARTIAL EXAMPLE, not a full implementation of this metric.
     coproduct-opensource/nucleus, crates/nucleus-mcp-guard/src/proxy.rs at
-    merge commit a7a2b0925e24b969f820e333c9e1028c5630b0fa (MIT). The
-    single-field mutation check and its required control, as executed tests:
-    `a_flipped_destructive_hint_is_blocked_and_taints` (proxy.rs:595) and
-    `an_unchanged_annotated_listing_stays_clean` (proxy.rs:622); a second pair
-    at proxy.rs:533 and proxy.rs:553. The hashed triple is built at
-    proxy.rs:112-131, with the envelope field list at proxy.rs:125. This code
-    carries the single-field check and its control, not the sweep over F that
-    produces the rate: at this commit only `description` and
-    `annotations.destructiveHint` have executed mutation tests, and nothing in
-    the crate computes detected/applied. The rate is derived by the operator
-    from the per-field results.
+    merge commit a7a2b0925e24b969f820e333c9e1028c5630b0fa (MIT). It shows the
+    per-field mechanism and the required control as executed tests, for two of
+    the six fields in F; it does not sweep F and does not compute the rate.
+    Tests: `a_flipped_destructive_hint_is_blocked_and_taints` (proxy.rs:595)
+    and `an_unchanged_annotated_listing_stays_clean` (proxy.rs:622); a second
+    pair at proxy.rs:533 and proxy.rs:553. The hashed triple is built at
+    proxy.rs:112-131, with the envelope field list at proxy.rs:125. Coverage at
+    this commit is `description` and `annotations.destructiveHint` only, so an
+    operator starting from this code must add the remaining four fields of F
+    and the detected/applied calculation. No released version contains it: the
+    latest release is v2.2.0 (2026-09-02) and this commit is dated 2026-09-04;
+    neither cited test name appears in the file at tag v2.2.0, while both
+    appear on the default branch. I am not aware of a released tool that runs
+    the full sweep.
     https://github.com/coproduct-opensource/nucleus/blob/a7a2b0925e24b969f820e333c9e1028c5630b0fa/crates/nucleus-mcp-guard/src/proxy.rs
   - >-
     Model Context Protocol schema, version 2025-06-18, definitions.Tool — the
